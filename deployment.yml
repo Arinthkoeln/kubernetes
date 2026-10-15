@@ -15,8 +15,15 @@ spec:
         app: sample-python-app
     spec:
       containers:
-      - name: python-app
-        image: python-web-app-demo:latest 
-        ports:
-        - containerPort: 8000
-
+        - name: python-app
+          image: python-web-app-demo:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          volumeMounts:
+            - name: db-connection
+              mountPath: /opt
+      volumes:
+        - name: db-connection
+          secret:
+            secretName: secret-test
